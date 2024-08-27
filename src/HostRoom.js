@@ -9,6 +9,10 @@ const HostRoom = () => {
     const [playerName, setPlayerName] = useState(''); // State for the host's name
     const navigate = useNavigate();
     const { createRoom, getRoom, startGame, addPlayerToRoom } = useRoomContext();
+    
+    const handleBackClick = () => {
+        navigate('/');
+    };
 
     const generateRoomCode = () => {
         if (!playerName) {
@@ -41,6 +45,9 @@ const HostRoom = () => {
 
     return (
         <div className="host-room">
+            <button className="back-button" onClick={handleBackClick}>
+                &larr; Back
+            </button>
             <div className="host-room-container">
                 <h1>Host a Room</h1>
                 {!roomCode && ( // Conditionally render input and button
