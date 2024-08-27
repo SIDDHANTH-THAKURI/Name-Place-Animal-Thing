@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes} from 'react-router-dom';
 import GifSlideshow from './GifSlideshow';
 import Title from './Title';
 import ButtonWrapper from './ButtonWrapper';
@@ -18,11 +18,14 @@ function App() {
                 <Routes>
                     {/* Default Route to Home (where your GIF slideshow and buttons are) */}
                     <Route path="/" element={
+                        
                         <div className="App">
+                            
                             <GifSlideshow />
                             <Title />
-                            <ButtonWrapper />
                             <SoundButton />
+                            <ButtonWrapper />
+                           
                         </div>
                     }/>
 

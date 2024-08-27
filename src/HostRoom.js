@@ -8,6 +8,10 @@ const HostRoom = () => {
     const [players, setPlayers] = useState([]);
     const navigate = useNavigate();
     const { createRoom, getRoom, startGame } = useRoomContext();
+    
+    const handleBackClick = () => {
+        navigate('/');
+    };
 
     const generateRoomCode = () => {
         const code = Math.random().toString(36).substr(2, 6).toUpperCase();
@@ -31,6 +35,9 @@ const HostRoom = () => {
 
     return (
         <div className="host-room">
+            <button className="back-button" onClick={handleBackClick}>
+                &larr; Back
+            </button>
             <div className="host-room-container">
                 <h1>Host a Room</h1>
                 <button onClick={generateRoomCode}>Generate Room Code</button>
