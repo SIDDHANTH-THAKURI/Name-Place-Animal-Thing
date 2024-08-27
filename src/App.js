@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes} from 'react-router-dom';
 import GifSlideshow from './GifSlideshow';
 import Title from './Title';
 import ButtonWrapper from './ButtonWrapper';

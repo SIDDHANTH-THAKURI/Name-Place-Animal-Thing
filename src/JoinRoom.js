@@ -59,8 +59,16 @@ const JoinRoom = () => {
         }
     };
 
+    const handleBackClick = () => {
+        navigate('/');
+    };
     return (
         <div className="join-room">
+            
+             <button className="back-button" onClick={handleBackClick}>
+                &larr; Back
+            </button>
+           
             <div className="join-room-container">
                 <h1>Join a Room</h1>
                 <input
