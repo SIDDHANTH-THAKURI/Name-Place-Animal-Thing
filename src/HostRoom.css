@@ -1,0 +1,90 @@
+/* src/components/HostRoom.css */
+.host-room {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    width: 100vw; /* Ensure the width covers the entire viewport */
+    background-color: #fff9db; /* Light yellow background for the entire screen */
+}
+
+.host-room-container {
+    background-color: #ffffff;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    max-width: 600px;
+    width: 100%;
+    font-family: cursive; /* Apply cursive font style */
+}
+
+button {
+    padding: 10px 20px;
+    background-color: #28a745; /* Same green as in JoinRoom.css */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-family: cursive;
+}
+
+button:hover {
+    background-color: #218838; /* Darker green on hover */
+}
+
+.error {
+    color: red;
+    margin-top: 10px;
+}
+
+.room-code {
+    margin-top: 20px;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+.room-code h2 {
+    margin: 0;
+    color: #333;
+}
+
+.room-code p {
+    font-size: 24px;
+    font-weight: bold;
+    color: #007bff; /* Same blue as used for room codes in JoinRoom.css */
+}
+
+.player-list {
+    margin-top: 20px;
+    text-align: left;
+}
+
+.player-list h3 {
+    margin: 0;
+}
+
+.player-list ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.player-list li {
+    padding: 5px 0;
+}
+
+.start-game-button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #007bff; /* Same blue as for Join button */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.start-game-button:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+}

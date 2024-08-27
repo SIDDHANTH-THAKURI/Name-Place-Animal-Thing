@@ -1,0 +1,58 @@
+/* src/components/JoinRoom.css */
+
+.join-room {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    width: 100vw;
+    background-color: #fff9db;
+}
+
+.join-room-container {
+    background-color: #ffffff;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    font-family: cursive; /* Apply cursive font style */
+}
+
+
+input[type="text"] {
+    padding: 10px;
+    margin: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-family: cursive;
+}
+
+.player-name-input {
+    margin-bottom: 10px; /* Space between name and room code inputs */
+    font-family: cursive;
+}
+
+button {
+    padding: 10px 20px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-family: cursive;
+}
+
+button:hover {
+    background-color: #218838;
+}
+
+.error {
+    color: red;
+    margin-top: 10px;
+}
+
+.loading {
+    margin-top: 20px;
+    color: #007bff;
+    font-weight: bold;
+}

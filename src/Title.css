@@ -1,0 +1,14 @@
+/* src/components/Title.css */
+.title-container {
+    position: relative; /* Ensure the container is positioned */
+    z-index: 10; /* Set a high z-index to bring it forward */
+    color: #333; /* Adjust color as needed */
+    font-size: 2rem; /* Adjust font size as needed */
+    text-align: center;
+    margin-bottom: 30%;
+}
+
+.title-gif {
+    max-width: 70%; /* Adjust to control the size of the title GIF */
+    height: auto;
+}
