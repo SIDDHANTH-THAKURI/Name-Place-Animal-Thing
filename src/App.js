@@ -18,11 +18,14 @@ function App() {
                 <Routes>
                     {/* Default Route to Home (where your GIF slideshow and buttons are) */}
                     <Route path="/" element={
+                        
                         <div className="App">
+                            
                             <GifSlideshow />
                             <Title />
-                            <ButtonWrapper />
                             <SoundButton />
+                            <ButtonWrapper />
+                           
                         </div>
                     }/>
 
