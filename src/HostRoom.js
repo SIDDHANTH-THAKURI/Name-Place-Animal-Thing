@@ -6,18 +6,28 @@ import './HostRoom.css';
 const HostRoom = () => {
     const [roomCode, setRoomCode] = useState('');
     const [players, setPlayers] = useState([]);
+    const [playerName, setPlayerName] = useState(''); // State for the host's name
     const navigate = useNavigate();
-    const { createRoom, getRoom, startGame } = useRoomContext();
+    const { createRoom, getRoom, startGame, addPlayerToRoom } = useRoomContext();
 
     const generateRoomCode = () => {
+        if (!playerName) {
+            alert("Please enter your name before generating a room code.");
+            return;
+        }
         const code = Math.random().toString(36).substr(2, 6).toUpperCase();
         createRoom(code);
         setRoomCode(code);
+        addPlayerToRoom(code, playerName); // Add host to the room as the first player
     };
 
     const handleStartGame = () => {
-        startGame(roomCode);
-        navigate('/play'); // Navigate to the Play page for the host
+        if (players.length > 1) {
+            startGame(roomCode);
+            navigate('/play'); // Navigate to the Play page for the host
+        } else {
+            alert("You need at least 2 players to start the game.");
+        }
     };
 
     useEffect(() => {
@@ -33,7 +43,17 @@ const HostRoom = () => {
         <div className="host-room">
             <div className="host-room-container">
                 <h1>Host a Room</h1>
-                <button onClick={generateRoomCode}>Generate Room Code</button>
+                {!roomCode && ( // Conditionally render input and button
+                    <>
+                        <input
+                            type="text"
+                            value={playerName}
+                            onChange={(e) => setPlayerName(e.target.value)}
+                            placeholder="Enter your name"
+                        />
+                        <button onClick={generateRoomCode}>Generate Room Code</button>
+                    </>
+                )}
                 {roomCode && (
                     <div className="room-code">
                         <h2>Your Room Code:</h2>

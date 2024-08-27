@@ -1,10 +1,9 @@
-/* src/components/HostRoom.css */
 .host-room {
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
-    width: 100vw; /* Ensure the width covers the entire viewport */
+    width: 100vw;
     background-color: #fff9db; /* Light yellow background for the entire screen */
 }
 
@@ -73,6 +72,12 @@ button:hover {
 
 .player-list li {
     padding: 5px 0;
+    font-weight: bold;
+    font-size: 18px;
+    background: linear-gradient(to right, #ff6179, #de4c8a, #7f00ff); /* Gradient background */
+    -webkit-background-clip: text; /* Clipping the background to text */
+    -webkit-text-fill-color: transparent; /* Making the text color transparent */
+    margin-bottom: 5px;
 }
 
 .start-game-button {
