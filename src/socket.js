@@ -1,6 +1,8 @@
-// socket.js
 import io from 'socket.io-client';
 
-const socket = io('http://localhost:3001');
+// Use environment variable to dynamically set the backend URL
+const backendURL = process.env.REACT_APP_BACKEND_URL || 'http://localhost:3001'; // Fallback to localhost if not set
+
+const socket = io(backendURL);
 
 export default socket;

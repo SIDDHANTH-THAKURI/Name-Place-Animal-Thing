@@ -1,31 +1,15 @@
 const express = require('express');
 const http = require('http');
 const { Server } = require('socket.io');
-const { MongoClient } = require('mongodb');
-
 const mongoose = require('mongoose');
 
-const dbURI = process.env.MONGODB_URI;
+// Use Mongoose for MongoDB connection
+const dbURI = process.env.MONGODB_URI; // Make sure to use MongoDB Atlas connection string here
 
+// Connect to MongoDB Atlas using Mongoose
 mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log('MongoDB connected'))
   .catch(err => console.error('MongoDB connection error:', err));
-
-
-// MongoDB setup
-const url = 'mongodb://localhost:27017'; // Local MongoDB URL
-const dbName = 'gameDB'; // The name of your database
-
-let db, roomsCollection;
-
-// Connect to MongoDB
-async function connectDB() {
-  const client = await MongoClient.connect(url, { useNewUrlParser: true, useUnifiedTopology: true });
-  console.log('Connected to MongoDB');
-  db = client.db(dbName);
-  roomsCollection = db.collection('rooms');
-}
-connectDB(); // Connect to the database
 
 // Express server setup
 const app = express();
@@ -36,6 +20,13 @@ const io = new Server(server, {
   cors: {
     origin: '*', // Allow all origins for development purposes
   },
+});
+
+// MongoDB collection setup
+let roomsCollection;
+mongoose.connection.once('open', () => {
+  roomsCollection = mongoose.connection.db.collection('rooms');
+  console.log('Connected to MongoDB collection: rooms');
 });
 
 // Function to calculate scores
