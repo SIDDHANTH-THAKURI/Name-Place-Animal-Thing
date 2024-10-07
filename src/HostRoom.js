@@ -1,56 +1,59 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useRoomContext } from './RoomContext';
+import socket from './socket';
 import './HostRoom.css';
 
 const HostRoom = () => {
     const [roomCode, setRoomCode] = useState('');
     const [players, setPlayers] = useState([]);
-    const [playerName, setPlayerName] = useState(''); // State for the host's name
+    const [playerName, setPlayerName] = useState('');
     const navigate = useNavigate();
-    const { createRoom, getRoom, startGame, addPlayerToRoom } = useRoomContext();
-    
-    const handleBackClick = () => {
-        navigate('/');
-    };
 
+    // Generate a unique room code and add the host as the first player
     const generateRoomCode = () => {
-        if (!playerName) {
-            alert("Please enter your name before generating a room code.");
+        if (!playerName.trim()) {
+            alert('Please enter your name.');
             return;
         }
+
         const code = Math.random().toString(36).substr(2, 6).toUpperCase();
-        createRoom(code);
         setRoomCode(code);
-        addPlayerToRoom(code, playerName); // Add host to the room as the first player
+
+        socket.emit('createRoom', { roomCode: code, playerName });
+        setPlayers([{ name: playerName }]); // Add host as the first player
     };
 
+    // Start the game for all players
     const handleStartGame = () => {
         if (players.length > 1) {
-            startGame(roomCode);
-            navigate('/play'); // Navigate to the Play page for the host
+            socket.emit('startGame', { roomCode });
+            navigate('/play', { state: { roomCode, playerName } });
         } else {
-            alert("You need at least 2 players to start the game.");
+            alert('At least 2 players are required to start the game.');
         }
     };
 
+    // Listen for updates when new players join
     useEffect(() => {
-        if (roomCode) {
-            const room = getRoom(roomCode);
-            if (room) {
-                setPlayers(room.players);
+        socket.on('playerJoined', (data) => {
+            if (data.roomCode === roomCode) {
+                setPlayers((prevPlayers) => [...prevPlayers, { name: data.playerName }]);
             }
-        }
-    }, [roomCode, getRoom]);
+        });
+
+        return () => {
+            socket.off('playerJoined');
+        };
+    }, [roomCode]);
 
     return (
         <div className="host-room">
-            <button className="back-button" onClick={handleBackClick}>
+            <button className="back-button" onClick={() => navigate('/')}>
                 &larr; Back
             </button>
             <div className="host-room-container">
                 <h1>Host a Room</h1>
-                {!roomCode && ( // Conditionally render input and button
+                {!roomCode && (
                     <>
                         <input
                             type="text"
@@ -63,23 +66,18 @@ const HostRoom = () => {
                 )}
                 {roomCode && (
                     <div className="room-code">
-                        <h2>Your Room Code:</h2>
-                        <p>{roomCode}</p>
+                        <h2>Room Code: {roomCode}</h2>
                         <div className="player-list">
-                            <h3>Players:</h3>
-                            {players.length > 0 ? (
-                                <ul>
-                                    {players.map((player, index) => (
-                                        <li key={index}>{player.name}</li>
-                                    ))}
-                                </ul>
-                            ) : (
-                                <p>No players yet.</p>
-                            )}
+                            <h3>Players</h3>
+                            <ul>
+                                {players.map((player, index) => (
+                                    <li key={index}>{player.name}</li>
+                                ))}
+                            </ul>
                         </div>
-                        {!getRoom(roomCode)?.gameStarted && (
-                            <button onClick={handleStartGame} className="start-game-button">Start Game</button>
-                        )}
+                        <button onClick={handleStartGame} className="start-game-button">
+                            Start Game
+                        </button>
                     </div>
                 )}
             </div>

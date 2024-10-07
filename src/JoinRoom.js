@@ -1,93 +1,78 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useRoomContext } from './RoomContext';
+import socket from './socket';
 import './JoinRoom.css';
 
 const JoinRoom = () => {
     const [roomCode, setRoomCode] = useState('');
     const [playerName, setPlayerName] = useState('');
     const [error, setError] = useState('');
-    const [loading, setLoading] = useState(false);
+    const [isWaiting, setIsWaiting] = useState(false);
     const navigate = useNavigate();
-    const { isRoomCodeValid, addPlayerToRoom, getRoom } = useRoomContext();
 
     const handleJoinRoom = () => {
+        setError('');
+        const normalizedRoomCode = roomCode.trim().toUpperCase();
         if (!playerName.trim()) {
             setError('Please enter your name.');
             return;
         }
 
-        if (roomCode.length === 6 && isRoomCodeValid(roomCode.toUpperCase())) {
-            const room = getRoom(roomCode.toUpperCase());
-            if (room.players.length < room.maxPlayers) {
-                addPlayerToRoom(roomCode.toUpperCase(), playerName.trim());
-                setLoading(true);
+        socket.emit('joinRoom', { roomCode: normalizedRoomCode, playerName });
+        setIsWaiting(true);
+    };
 
-                // Check if the game has started
-                const checkGameStarted = () => {
-                    const updatedRoom = getRoom(roomCode.toUpperCase());
-                    if (updatedRoom.gameStarted) {
-                        setLoading(false);
-                        navigate('/play');
-                    }
-                };
+    // Handle any errors like room being full or not existing
+    useEffect(() => {
+        socket.on('joinError', (errorMessage) => {
+            setError(errorMessage);
+            setIsWaiting(false);
+        });
 
-                // Initial check
-                checkGameStarted();
-
-                // Listen for changes in localStorage
-                const handleStorageChange = (event) => {
-                    if (event.key === 'rooms') {
-                        const updatedRoom = JSON.parse(event.newValue)[roomCode.toUpperCase()];
-                        if (updatedRoom && updatedRoom.gameStarted) {
-                            setLoading(false);
-                            navigate('/play');
-                        }
-                    }
-                };
-
-                window.addEventListener('storage', handleStorageChange);
-
-                return () => {
-                    window.removeEventListener('storage', handleStorageChange);
-                };
-            } else {
-                setError('Room is full. Please join another room.');
+        const handleGameStarted = (data) => {
+            if (data.roomCode === roomCode) {
+                navigate('/play', { state: { roomCode, playerName } });
             }
-        } else {
-            setError('Invalid Room Code. Please enter a 6-character code.');
-        }
-    };
+        };
 
-    const handleBackClick = () => {
-        navigate('/');
-    };
+        socket.on('gameStarted', handleGameStarted);
+
+        return () => {
+            socket.off('joinError');
+            socket.off('gameStarted', handleGameStarted);
+        };
+    }, [roomCode, playerName, navigate]);
+
     return (
         <div className="join-room">
-            
-             <button className="back-button" onClick={handleBackClick}>
+            <button className="back-button" onClick={() => navigate('/')}>
                 &larr; Back
             </button>
-           
             <div className="join-room-container">
                 <h1>Join a Room</h1>
-                <input
-                    type="text"
-                    value={playerName}
-                    onChange={(e) => setPlayerName(e.target.value)}
-                    placeholder="Enter Your Name"
-                    className="player-name-input"
-                />
-                <input
-                    type="text"
-                    value={roomCode}
-                    onChange={(e) => setRoomCode(e.target.value)}
-                    placeholder="Enter Room Code"
-                    className="room-code-input"
-                />
-                <button onClick={handleJoinRoom} className="join-button">Join</button>
+                {!isWaiting && (
+                    <>
+                        <input
+                            type="text"
+                            value={playerName}
+                            onChange={(e) => setPlayerName(e.target.value)}
+                            placeholder="Enter your name"
+                            className="player-name-input"
+                        />
+                        <input
+                            type="text"
+                            value={roomCode}
+                            onChange={(e) => setRoomCode(e.target.value)}
+                            placeholder="Enter room code"
+                            className="room-code-input"
+                        />
+                        <button onClick={handleJoinRoom} className="join-button">
+                            Join
+                        </button>
+                    </>
+                )}
+                {isWaiting && <div className="waiting-message">Waiting for the host to start the game...</div>}
                 {error && <div className="error">{error}</div>}
-                {loading && <div className="loading">Waiting for the game to start...</div>}
             </div>
         </div>
     );

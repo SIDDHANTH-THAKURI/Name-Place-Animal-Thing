@@ -9,7 +9,9 @@ import Play from './Play'; // Import the Play component
 import HostRoom from './HostRoom';
 import Multiplayer from './Multiplayer';
 import { RoomProvider } from './RoomContext'; // Import the RoomProvider
+import ResultsPage from './ResultsPage';
 import './App.css';
+
 
 function App() {
     return (
@@ -40,6 +42,10 @@ function App() {
                     
                     {/* Route for multiplayer page */}
                     <Route path="/multiplayer" element={<Multiplayer />} />
+
+                    {/* Route for ResultsPage page */}
+                    <Route path="/results" element={<ResultsPage />} />
+
                 </Routes>
             </Router>
         </RoomProvider>

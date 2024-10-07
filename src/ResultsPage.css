@@ -1,0 +1,97 @@
+/* Container for the entire results page */
+.results-page {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  /* Header styling */
+  .results-page h1 {
+    text-align: center;
+    margin-bottom: 30px;
+  }
+  
+  /* Winner announcement styling */
+  .results-page h2 {
+    text-align: center;
+    margin-top: 40px;
+    color: #2e7d32; /* A shade of green */
+  }
+  
+  /* List styling for players */
+  .results-page ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  /* Individual player result container */
+  .player-result {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 20px;
+    background-color: #f9f9f9;
+  }
+  
+  /* Player name and total score */
+  .player-result h3 {
+    margin-top: 0;
+    font-size: 1.5em;
+    color: #1e88e5; /* A shade of blue */
+  }
+  
+  /* Category entries */
+  .results-entry p {
+    margin: 5px 0;
+    font-size: 1.1em;
+  }
+  
+  /* Score display within category entries */
+  .results-entry p span {
+    font-weight: bold;
+    color: #388e3c; /* A shade of green */
+  }
+  
+  /* Back to Home button styling */
+  .results-page button {
+    display: block;
+    margin: 30px auto 0;
+    padding: 10px 20px;
+    font-size: 1em;
+    background-color: #1e88e5; /* Blue background */
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .results-page button:hover {
+    background-color: #1565c0; /* Darker blue on hover */
+  }
+  
+  /* Winner trophy emoji styling */
+  .winner-announcement {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .winner-announcement h2 {
+    margin-left: 10px;
+  }
+  
+  @media screen and (max-width: 600px) {
+    /* Responsive adjustments for smaller screens */
+    .player-result h3 {
+      font-size: 1.3em;
+    }
+  
+    .results-entry p {
+      font-size: 1em;
+    }
+  
+    .results-page button {
+      width: 100%;
+    }
+  }
+  

@@ -80,6 +80,25 @@ button:hover {
     margin-bottom: 5px;
 }
 
+/* Grading option styles */
+.grading-option {
+    margin-top: 20px;
+    text-align: left;
+}
+
+.grading-option label {
+    font-weight: bold;
+    color: #007bff;
+    margin-right: 10px;
+}
+
+.grading-option select {
+    padding: 8px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 1em;
+}
+
 .start-game-button {
     margin-top: 20px;
     padding: 10px 20px;
@@ -93,6 +112,7 @@ button:hover {
 .start-game-button:hover {
     background-color: #0056b3; /* Darker blue on hover */
 }
+
 .back-button {
     position: absolute;
     top: 20px;

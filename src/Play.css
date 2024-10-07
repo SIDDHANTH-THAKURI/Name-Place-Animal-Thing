@@ -1,0 +1,71 @@
+/* src/components/Play.css */
+.play-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    width: 100vw; /* Ensure the width covers the entire viewport */
+    background-color: #fff9db;
+    padding: 20px;
+    font-family: cursive;
+    box-sizing: border-box; /* Ensure padding is included in total height/width */
+}
+
+h1 {
+    font-size: 2.5em; /* Increase font size for better visibility */
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.letter {
+    font-size: 4em; /* Large font size for the letter */
+    color: #ff6347; /* Example color for visibility */
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.game-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 500px; /* Increased max-width for better readability */
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column; /* Stack label and input vertically */
+    width: 100%;
+    margin-bottom: 15px;
+}
+
+.input-group label {
+    margin-bottom: 5px;
+    text-align: left;
+    font-weight: bold;
+    color: #007bff;
+}
+
+.input-group input {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1em;
+    width: 100%; /* Make input take full width */
+}
+
+button {
+    padding: 10px 20px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1.2em;
+    margin-top: 20px; /* Add space above button */
+}
+
+button:hover {
+    background-color: #218838;
+}
