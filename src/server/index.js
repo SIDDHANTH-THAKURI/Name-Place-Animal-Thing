@@ -3,6 +3,15 @@ const http = require('http');
 const { Server } = require('socket.io');
 const { MongoClient } = require('mongodb');
 
+const mongoose = require('mongoose');
+
+const dbURI = process.env.MONGODB_URI;
+
+mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
+  .then(() => console.log('MongoDB connected'))
+  .catch(err => console.error('MongoDB connection error:', err));
+
+
 // MongoDB setup
 const url = 'mongodb://localhost:27017'; // Local MongoDB URL
 const dbName = 'gameDB'; // The name of your database
